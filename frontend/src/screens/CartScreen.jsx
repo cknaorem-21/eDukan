@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaTrashCan } from "react-icons/fa6";
-import { addToCart } from '../slices/cartSlice';
+import { addToCart, removeFromCart } from '../slices/cartSlice';
 import QuantityPicker from '../components/QuantityPicker';
 
 const CartScreen = () => {
@@ -47,6 +47,13 @@ const CartScreen = () => {
     }
   }
 
+  const handleRemoveFromCart = async (id) => {
+    dispatch(removeFromCart(id))
+  }
+
+  const checkoutHandler = () => {
+    navigate('/login?redirect=/shipping')
+  }
   return (
     <>
         <div>
@@ -89,7 +96,8 @@ const CartScreen = () => {
                                             </div>    
                                         </div>
                                         <div className='flex items-center'>
-                                            <button className='flex gap-1 items-center border border-gray-300 bg-gray-200 rounded p-1 hover:bg-gray-300'>
+                                            {/* Delete button */}
+                                            <button className='flex gap-1 items-center border border-gray-300 bg-gray-200 rounded p-1 hover:bg-gray-300' onClick={(e) => handleRemoveFromCart(item._id)}>
                                                 <span className='text-sm'>Delete</span>
                                                 <FaTrashCan className='text-[15px] text-gray-700 border'/> 
                                             </button>
@@ -109,7 +117,11 @@ const CartScreen = () => {
                             </div>
                             <hr className='border-1-2 border-gray-300'/>
                             <div className='mt-1'>
-                                <button className='border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900' disabled={cartItems.length === '0'}>
+                                <button 
+                                    className='border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900' 
+                                    disabled={cartItems.length === '0'}
+                                    onClick={checkoutHandler}
+                                >
                                     Proceed to checkout
                                 </button>
                             </div>
