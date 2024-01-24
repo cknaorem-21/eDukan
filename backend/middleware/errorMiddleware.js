@@ -9,14 +9,14 @@ const errorHandler = (err, req, res, next) => {
     let message = err.message;
 
     // check for mongoose bad ObjectId
-    if(err.name === 'CastError' && err.kind === 'Object Id') {
+    if(err.name === 'CastError' && err.kind === 'ObjectId') {
         message = `Resource not found`;
         statusCode = 404;
     }
 
     res.status(statusCode).json({
         message,
-        stack: ProcessingInstruction.env.Node_ENV === 'production' ? 'production' : err.stack,
+        stack: process.env.Node_ENV === 'production' ? 'production error' : err.stack,
     });
 
 }
