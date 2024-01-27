@@ -20,7 +20,6 @@ const CartScreen = () => {
   const handleQuantity = (e, product) => {
     const name = e.target.name
     const quantity = Number(e.target.value)
-    console.log("qqq", quantity, typeof quantity)
     
     if(name === 'input') {
       if(e.target.value === '') {
