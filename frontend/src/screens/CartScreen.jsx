@@ -109,15 +109,17 @@ const CartScreen = () => {
                             <div className='text-center text-xl font-semibold'>Subtotal</div>
                             <hr className='border-1-2 border-gray-300'/>
                             <div className=''>
-                                Total items: {cartItems.reduce((acc, item) => acc + item.quantity, 0)} 
+                            <span className='font-semibold'>Total items: </span>
+                            {cartItems.reduce((acc, item) => acc + item.quantity, 0)} 
                             </div>
                             <div className=''>
-                                Total Price: &#8377; {cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}
+                                <span className='font-semibold'>Total Price: </span>
+                                &#8377; {cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0).toFixed(2)}
                             </div>
                             <hr className='border-1-2 border-gray-300'/>
                             <div className='mt-1'>
                                 <button 
-                                    className='border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900' 
+                                    className='border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900 w-full' 
                                     disabled={cartItems.length === '0'}
                                     onClick={checkoutHandler}
                                 >
