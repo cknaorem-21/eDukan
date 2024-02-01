@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaTrashCan } from "react-icons/fa6";
 import { addToCart, removeFromCart } from '../slices/cartSlice';
-import QuantityPicker from '../components/QuantityPicker';
+import Message from '../components/Message';
 
 const CartScreen = () => {
   const navigate = useNavigate()
@@ -62,11 +62,12 @@ const CartScreen = () => {
         {
             cartItems.length === 0 ? (
                 <>
-                    <div className='text-lg text-blue-800 bg-blue-200 border rounded my-3 border-blue-400 p-4'>
-                        Your cart is empty
+                    <div className='my-3'>
+                      <Message color='blue'>Your cart is empty</Message>
                     </div>
+                
                     <Link to='/'>
-                        <button className='bg-gray-200 border-2 border-gray-300 rounded p-1 mb-3'>Go Back</button>
+                      <button className='bg-gray-200 border-2 border-gray-300 rounded p-1 mb-3'>Go Back</button>
                     </Link>
                     
                 </>
