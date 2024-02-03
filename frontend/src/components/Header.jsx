@@ -68,7 +68,7 @@ const Header = () => {
             {/* Dropdown */}
             {dropdown && (
               <div className="absolute top-[2rem] flex flex-col w-[7rem] min-w-max text-black rounded-sm bg-gray-100 border border-gray-400">
-                <Link to="/profile">
+                <Link to="/profile" onClick={()=>setDropdown(false)}>
                   <div className="hover:bg-gray-300 p-2 rounded-sm border-b border-gray-300">
                     Profile
                   </div>

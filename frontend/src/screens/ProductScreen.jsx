@@ -4,6 +4,7 @@ import Rating from "../components/Rating"
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice"
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import QuantityPicker from "../components/QuantityPicker";
 
 const ProductScreen = () => {
@@ -55,7 +56,8 @@ const ProductScreen = () => {
   const addToCartHandler = () => {
     console.log("add to cart button clicked")
     dispatch(addToCart({...product, quantity}))
-    navigate('/cart')
+    // navigate('/cart')
+    toast.success("Item added to cart")
   }
 
   return (

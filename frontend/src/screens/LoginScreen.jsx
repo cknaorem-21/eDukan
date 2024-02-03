@@ -30,7 +30,6 @@ useEffect(() => {
 const submitHandler = async (e) => {
     e.preventDefault()
     try {
-        // console.log('try block')
         const res = await login({email, password}).unwrap()
         console.log(res)
         dispatch(setCredentials({...res}))
