@@ -99,7 +99,7 @@ const CartScreen = () => {
                                             {/* Delete button */}
                                             <button className='flex gap-1 items-center border border-gray-300 bg-gray-200 rounded p-1 hover:bg-gray-300' onClick={(e) => handleRemoveFromCart(item._id)}>
                                                 <span className='text-sm'>Delete</span>
-                                                <FaTrashCan className='text-[15px] text-gray-700 border'/> 
+                                                <FaTrashCan className='text-[15px] text-gray-700'/> 
                                             </button>
                                         </div>
                                     </div>

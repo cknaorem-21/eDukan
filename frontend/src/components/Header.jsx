@@ -11,7 +11,8 @@ import { logout } from "../slices/authSlice";
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
-  const [dropdown, setDropdown] = useState(false);
+  const [ dropdown, setDropdown ] = useState(false);
+  const [ adminDropdown, setAdminDropdown ] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -88,6 +89,49 @@ const Header = () => {
             <span className="p-1">Sign in</span>
           </NavLink>
         )}
+
+        { userInfo && userInfo.isAdmin && (
+          <div className="relative p-1 select-none">
+          <div
+            onClick={() => setAdminDropdown(!adminDropdown)}
+            className={`flex items-center gap-1 cursor-pointer ${
+              adminDropdown ? "text-blue-400" : ""
+            }`}
+          >
+            Admin
+            {adminDropdown ? (
+              <FaAngleUp className="text-sm" />
+            ) : (
+              <FaAngleDown className="text-sm" />
+            )}
+          </div>
+          {/* Admin Dropdown */}
+          {adminDropdown && (
+            <div className="absolute top-[2rem] flex flex-col w-[5.5rem] min-w-max text-black rounded-sm bg-gray-100 border border-gray-400">
+              <Link to="/admin/productlist" onClick={()=>setAdminDropdown(false)}>
+                <div className="hover:bg-gray-300 p-2 rounded-sm border-b border-gray-300">
+                  Products
+                </div>
+              </Link>
+
+              <Link to="/admin/userlist" onClick={()=>setAdminDropdown(false)}>
+                <div className="hover:bg-gray-300 p-2 rounded-sm border-b border-gray-300">
+                  Users
+                </div>
+              </Link>
+
+              <Link to="/admin/orderlist" onClick={()=>setAdminDropdown(false)}>
+                <div className="hover:bg-gray-300 p-2 rounded-sm border-b border-gray-300">
+                  Orders
+                </div>
+              </Link>
+              
+            </div>
+          )}
+        </div>
+        )
+
+        }
       </nav>
     </header>
   );
