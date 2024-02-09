@@ -44,7 +44,7 @@ const OrderScreen = () => {
           type: "resetOptions",
           value: {
             "client-id": paypal.clientId,
-            currency: "INR",
+            currency: "USD",
           },
         });
 
@@ -82,12 +82,13 @@ const OrderScreen = () => {
   };
 
   const createOrder = (data, actions) => {
+    const conversionRate = 73;
     return actions.order
       .create({
         purchase_units: [
           {
             amount: {
-              value: order.totalPrice,
+              value: Number((order.totalPrice/conversionRate).toFixed(2)),
             },
           },
         ],
@@ -258,7 +259,7 @@ const OrderScreen = () => {
                       className="border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900 w-full my-2"
                       onClick={onApproveTest}
                     >
-                      Test Pay Order
+                      Test Payment
                     </button>
 
                     <PayPalButtons

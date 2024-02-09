@@ -36,10 +36,10 @@ const HomeScreen = () => {
         </div>
       ) : (
         <>
-          <h1 className='text-lg font-bold my-3'>Latest products</h1>
+          <h1 className='text-lg font-bold my-3'>Products</h1>
 
           {/* tiles container */}
-          <div className='flex flex-wrap justify-center gap-3 w-full'>
+          <div className='flex flex-wrap justify-between gap-3 w-full'>
               {products.map((product) => (
                   <Product key={product._id} product={product}/>
               ))}

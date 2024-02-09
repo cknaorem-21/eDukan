@@ -13,9 +13,11 @@ const Rating = ({rating, reviewCount}) => {
                 <span> {rating >= 4 ? <FaStar className='inline text-yellow-500'/> : rating >= 3.5 ? <FaStarHalfAlt className='inline text-yellow-500'/> : <FaRegStar className='inline text-gray-400'/>} </span>
                 <span> {rating >= 5 ? <FaStar className='inline text-yellow-500'/> : rating >= 4.5 ? <FaStarHalfAlt className='inline text-yellow-500'/> : <FaRegStar className='inline text-gray-400'/>} </span>
                 
-                <span className='italic text-sm'>
+                { reviewCount && (
+                  <span className='italic text-sm'>
                     {`(${reviewCount} reviews)`}
-                </span>
+                  </span>
+                )}
         </div>
     </>
   )
