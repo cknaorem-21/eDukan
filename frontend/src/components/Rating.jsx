@@ -15,7 +15,7 @@ const Rating = ({rating, reviewCount}) => {
                 
                 { reviewCount && (
                   <span className='italic text-sm'>
-                    {`(${reviewCount} reviews)`}
+                    {reviewCount>1 ? (`(${reviewCount} reviews)`) : (`(${reviewCount} review)`)}
                   </span>
                 )}
         </div>

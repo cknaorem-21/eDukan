@@ -6,23 +6,6 @@ import Product from '../components/Product'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
 
 const HomeScreen = () => {
-  // const [products, setProducts] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try{
-  //       const response = await axios.get('/api/products')
-  //       setProducts(response.data);  
-  //     } catch(error) {
-  //       console.log(error)
-  //     }
-  //   }
-    
-  //   fetchProducts();
-  // }, [])
-
-  // console.log(products);
-
   const { data: products, isLoading, error} = useGetProductsQuery();
 
   return (
@@ -39,11 +22,11 @@ const HomeScreen = () => {
           <h1 className='text-lg font-bold my-3'>Products</h1>
 
           {/* tiles container */}
-          <div className='flex flex-wrap justify-between gap-3 w-full'>
+          <div className='flex flex-wrap justify-center gap-3 w-full'>
+              {/* tiles */}
               {products.map((product) => (
                   <Product key={product._id} product={product}/>
               ))}
-              {/* tiles */}
           </div>
         </>
       )}

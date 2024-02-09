@@ -29,7 +29,7 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-    const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
+  const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
 
   const navigate = useNavigate();
 
@@ -107,16 +107,6 @@ const ProductEditScreen = () => {
                     Image
                   </label>
                   <div className="border border-gray-400 rounded divide-y">
-                    {/* <input
-                      id="image"
-                      type="text"
-                      placeholder="Enter image url"
-                      value={image}
-                      onChange={(e) => setImage(e.target.value)}
-                      className="w-full p-2 rounded"
-                    /> */}
-                    {image}
-                    {/* \uploads\image-1707249792154.jpg */}
                     <img src={image} alt={image} className='h-[10rem] m-auto border border-gray-400'/>
                     <input
                       id="img"
