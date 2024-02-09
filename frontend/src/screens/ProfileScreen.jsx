@@ -7,6 +7,7 @@ import { setCredentials } from "../slices/authSlice";
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -158,13 +159,16 @@ const ProfileScreen = () => {
                   <div>
                     <button
                       type="submit"
-                      className="bg-gray-800 rounded text-white font-bold p-2 w-full"
+                      className="flex justify-center gap-2 bg-gray-800 rounded text-white font-bold p-2 w-full"
                     >
                       Update
+                      {loadingUpdateProfile && (
+                        <div className="h-5 w-5">
+                          <Loader />
+                        </div>
+                      )}
                     </button>
                   </div>
-
-                  {loadingUpdateProfile && <p>Loading...</p>}
                 </div>
               </form>
 
@@ -207,7 +211,9 @@ const ProfileScreen = () => {
           <h1 className="text-2xl font-bold mb-2">My Orders</h1>
 
           {isLoading ? (
-            <p>Loading...</p>
+            <div>
+              <Loader />
+            </div>
           ) : error ? (
             <Message color="red">{error?.data?.message || error.error}</Message>
           ) : (
@@ -225,7 +231,10 @@ const ProfileScreen = () => {
 
               <tbody className="text-center">
                 {orders.map((order) => (
-                  <tr key={order._id} className="border-b border-gray-500 h-10 hover:bg-gray-300 odd:bg-gray-200 select-none">
+                  <tr
+                    key={order._id}
+                    className="border-b border-gray-500 h-10 hover:bg-gray-300 odd:bg-gray-200 select-none"
+                  >
                     <td>{order._id}</td>
                     <td>{order.createdAt.substring(0, 10)}</td>
                     <td>&#8377; {order.totalPrice}</td>
@@ -248,7 +257,12 @@ const ProfileScreen = () => {
                       </div>
                     </td>
                     <td>
-                      <Link to={`/order/${order._id}`} className="text-blue-700">More...</Link>
+                      <Link
+                        to={`/order/${order._id}`}
+                        className="text-blue-700"
+                      >
+                        More...
+                      </Link>
                     </td>
                   </tr>
                 ))}

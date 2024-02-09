@@ -7,7 +7,7 @@ const Product = ({ product }) => {
     <>
       <Link
         to={`/product/${product._id}`}
-        className="w-[19%] aspect-[4/5] border rounded border-gray-200 p-2"
+        className="w-[19%] aspect-[4/5] border rounded border-gray-300 p-2"
       >
         <div className="border rounded w-full aspect-square">
           <img src={product.image} alt="image" className="object-contain w-full h-full rounded"/>

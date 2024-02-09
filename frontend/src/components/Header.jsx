@@ -34,7 +34,7 @@ const Header = () => {
     <header className="flex justify-between items-center w-full h-[4rem] bg-gray-800 p-8">
       <Link to="/" className="text-white h-fit w-fit">
         <FiShoppingBag className="inline text-[2rem]" />
-        <span className="p-2">eDUKAN</span>
+        <span className="p-2">e-MARKET</span>
       </Link>
       <nav className="text-white flex gap-4">
         <NavLink to="/cart" className="relative pr-4">

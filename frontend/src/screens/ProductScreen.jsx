@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import QuantityPicker from "../components/QuantityPicker";
 import RatingSelect from "../components/RatingSelect";
 import Message from "../components/Message";
+import Loader from "../components/Loader";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -81,18 +82,18 @@ const ProductScreen = () => {
       await createReview({
         productId,
         rating,
-        comment
+        comment,
       }).unwrap();
       refetch();
-      toast.success('Review submitted.');
+      toast.success("Review submitted.");
       setRating(0);
-      setComment('');
+      setComment("");
     } catch (error) {
-      console.log(product.reviews)
+      console.log(product.reviews);
       console.log(error);
       toast.error(error?.data?.message || error.error);
     }
-  }
+  };
 
   return (
     <>
@@ -105,7 +106,9 @@ const ProductScreen = () => {
       </div>
 
       {isLoading ? (
-        <h2>Loading......</h2>
+        <div className="w-screen h-screen">
+          <Loader />
+        </div>
       ) : error ? (
         <div>{error?.data?.message || error.error}</div>
       ) : (
@@ -194,44 +197,47 @@ const ProductScreen = () => {
                   <h2 className="text-lg font-semibold">Write a review</h2>
                 </div>
 
-                {loadingProductReview && <p>Loading...</p>}
-
                 {userInfo ? (
                   <form onSubmit={submitHandler}>
                     <div className="border border-gray-300 rounded p-2 space-y-2">
-                    <div className="border-b pb-2 border-gray-300">
-                      <span className="text-gray-700 ">Rating:</span>
-                      {/* Poor Fair Good VeryGood Excellent */}
-                      <RatingSelect rating={rating} setRating={setRating} />
-                    </div>
-                    <div className="flex flex-col">
-                      <label htmlFor="review" className="text-gray-700 ">
-                        Comment:
-                      </label>
+                      <div className="border-b pb-2 border-gray-300">
+                        <span className="text-gray-700 ">Rating:</span>
+                        {/* Poor Fair Good VeryGood Excellent */}
+                        <RatingSelect rating={rating} setRating={setRating} />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="review" className="text-gray-700 ">
+                          Comment:
+                        </label>
 
-                      <textarea
-                        name="review"
-                        id="review"
-                        rows="5"
-                        placeholder="Write your review here."
-                        className="w-full p-2 border border-gray-400 rounded"
-                        onChange={(e)=> setComment(e.target.value)}
-                      ></textarea>
-                    </div>
+                        <textarea
+                          name="review"
+                          id="review"
+                          rows="5"
+                          placeholder="Write your review here."
+                          className="w-full p-2 border border-gray-400 rounded"
+                          onChange={(e) => setComment(e.target.value)}
+                        ></textarea>
+                      </div>
 
-                    <button 
-                        type='submit' className='bg-gray-800 rounded text-white font-bold p-2'
+                      <button
+                        type="submit"
+                        className="bg-gray-800 rounded text-white font-bold p-2"
                         disabled={loadingProductReview}
-                    >
+                      >
                         Submit
-                    </button>
-                  </div>
+                      </button>
+                    </div>
                   </form>
-                  
                 ) : (
-                  <Message color='blue'>Please <Link to='/login' className="text-blue-500 underline">log in</Link> to write a review</Message>
+                  <Message color="blue">
+                    Please{" "}
+                    <Link to="/login" className="text-blue-500 underline">
+                      log in
+                    </Link>{" "}
+                    to write a review
+                  </Message>
                 )}
-
               </div>
 
               {/* Reviews */}
@@ -240,13 +246,26 @@ const ProductScreen = () => {
                   <h2 className="text-lg font-semibold">Reviews</h2>
                 </div>
 
-                { product.reviews.length === 0 && <Message color='blue'>No reviews yet</Message> }
+                {loadingProductReview && (
+                  <div className="bg-red-200">
+                    <Loader />
+                  </div>
+                )}
 
-                { product.reviews.map((review) => (
-                  <div key={review._id} className="border border-gray-300 rounded p-2">
+                {product.reviews.length === 0 && (
+                  <Message color="blue">No reviews yet</Message>
+                )}
+
+                {product.reviews.map((review) => (
+                  <div
+                    key={review._id}
+                    className="border border-gray-300 rounded p-2"
+                  >
                     <h4 className="font-semibold">{review.name}</h4>
-                    <Rating rating={review.rating}/>
-                    <p className='italic text-sm'>Reviewed on: {review.createdAt.substring(0,10)}</p>
+                    <Rating rating={review.rating} />
+                    <p className="italic text-sm">
+                      Reviewed on: {review.createdAt.substring(0, 10)}
+                    </p>
                     <p className="text-gray-600">{review.comment}</p>
                   </div>
                 ))}

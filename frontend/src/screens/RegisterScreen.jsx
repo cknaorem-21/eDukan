@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
@@ -118,13 +119,16 @@ const RegisterScreen = () => {
 
               <button
                 type="submit"
-                className="bg-gray-800 rounded text-white font-bold p-2"
+                className="flex justify-center gap-2 bg-gray-800 rounded text-white font-bold p-2"
                 disabled={isLoading}
               >
                 Register
+                {isLoading && (
+                  <div className="h-5 w-5">
+                    <Loader />
+                  </div>
+                )}
               </button>
-
-              {isLoading && `Loading...`}
             </div>
           </form>
 

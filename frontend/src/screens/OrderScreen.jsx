@@ -11,6 +11,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Loader from "../components/Loader";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -88,7 +89,7 @@ const OrderScreen = () => {
         purchase_units: [
           {
             amount: {
-              value: Number((order.totalPrice/conversionRate).toFixed(2)),
+              value: Number((order.totalPrice / conversionRate).toFixed(2)),
             },
           },
         ],
@@ -102,15 +103,17 @@ const OrderScreen = () => {
     try {
       await deliverOrder(orderId);
       refetch();
-      toast.success('Order delivered');
+      toast.success("Order delivered");
     } catch (error) {
       toast.error(error?.data?.message || error.message);
     }
-  }
+  };
 
   return isLoading ? (
     <>
-      <p>Loading...</p>
+      <div className="w-screen h-screen">
+        <Loader />
+      </div>
     </>
   ) : error ? (
     <>
@@ -249,10 +252,16 @@ const OrderScreen = () => {
           <div className="mt-1">
             {!order.isPaid && (
               <div>
-                {loadingPay && "Loading"}
+                {loadingPay && (
+                  <div className="w-screen h-screen">
+                    <Loader />
+                  </div>
+                )}
 
                 {isPending ? (
-                  "Loading"
+                  <div className="w-screen h-screen">
+                    <Loader />
+                  </div>
                 ) : (
                   <div>
                     <button
@@ -272,14 +281,18 @@ const OrderScreen = () => {
               </div>
             )}
 
-            {loadingDeliver && <p>Loading...</p>}
+            {loadingDeliver && (
+              <div className="w-screen h-screen">
+                <Loader />
+              </div>
+            )}
             {userInfo &&
               userInfo.isAdmin &&
               order.isPaid &&
               !order.isDelivered && (
-                <button 
+                <button
                   className="border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900 w-full"
-                  onClick={ deliverOrderHandler }
+                  onClick={deliverOrderHandler}
                 >
                   Mark as delivered
                 </button>

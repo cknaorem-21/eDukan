@@ -5,6 +5,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const PlaceOrderScreen = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  const [createOrder, {isLoading, error}] = useCreateOrderMutation();
+  const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -24,23 +25,23 @@ const PlaceOrderScreen = () => {
 
   const placeOrderHandler = async () => {
     try {
-        const res = await createOrder({
-            orderItems: cart.cartItems,
-            shippingAddress: cart.shippingAddress,
-            paymentMethod: cart.paymentMethod,
-            itemsPrice: cart.itemsPrice,
-            shippingPrice: cart.shippingPrice,
-            taxPrice: cart.taxPrice,
-            totalPrice: cart.totalPrice,
-        }).unwrap();
+      const res = await createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      }).unwrap();
 
-        dispatch(clearCartItems());
-        navigate(`/order/${res._id}`);
+      dispatch(clearCartItems());
+      navigate(`/order/${res._id}`);
     } catch (error) {
-        console.log(error)
-        toast.error(error.data.message)
+      console.log(error);
+      toast.error(error.data.message);
     }
-  }
+  };
 
   return (
     <>
@@ -117,50 +118,53 @@ const PlaceOrderScreen = () => {
             </div>
           </div>
 
-            <div className="flex flex-col gap-2 w-[30%] h-fit shadow-lg border border-gray-400 rounded-md m-1 p-4">
-              <div className="text-center text-xl font-semibold">Order Summary</div>
-              <hr className="border-1-2 border-gray-300" />
-              <div className="">
-                <span className='font-semibold'>Total items: </span> 
-                {cart.cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                
-              </div>
-              
-              <div className="">
-                <span className='font-semibold'>Total Price: </span>
-                &#8377;{cart.itemsPrice}  
-              </div>
-            
-              <div className="">
-                <span className='font-semibold'>Shipping Price: </span>
-                &#8377;{cart.shippingPrice}
-              </div>
-
-              <div className="">
-                <span className='font-semibold'>Tax: </span>
-                &#8377;{cart.taxPrice}
-              </div>
-
-              <div className="">
-                <span className='font-semibold'>Grand total: </span>
-                &#8377;{cart.totalPrice}
-              </div>
-
-              <hr className="border-1-2 border-gray-300" />
-              <div className="mt-1">
-                <button
-                  className="border rounded bg-gray-800 px-3 py-1 text-gray-100 hover:bg-gray-900 w-full"
-                  disabled={cart.cartItems.length === 0}
-                  onClick={placeOrderHandler}
-                >
-                  Place Order
-                </button>
-
-                {isLoading && <p>Loading.....</p>}
-
-                {error && <p>Error: {error.data.message}</p>}
-              </div>
+          <div className="flex flex-col gap-2 w-[30%] h-fit shadow-lg border border-gray-400 rounded-md m-1 p-4">
+            <div className="text-center text-xl font-semibold">
+              Order Summary
             </div>
+            <hr className="border-1-2 border-gray-300" />
+            <div className="">
+              <span className="font-semibold">Total items: </span>
+              {cart.cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+            </div>
+
+            <div className="">
+              <span className="font-semibold">Total Price: </span>
+              &#8377;{cart.itemsPrice}
+            </div>
+
+            <div className="">
+              <span className="font-semibold">Shipping Price: </span>
+              &#8377;{cart.shippingPrice}
+            </div>
+
+            <div className="">
+              <span className="font-semibold">Tax: </span>
+              &#8377;{cart.taxPrice}
+            </div>
+
+            <div className="">
+              <span className="font-semibold">Grand total: </span>
+              &#8377;{cart.totalPrice}
+            </div>
+
+            <hr className="border-1-2 border-gray-300" />
+            <div className="mt-1">
+              <button
+                className="flex justify-center gap-2 w-full bg-gray-800 rounded text-white font-bold p-2"
+                disabled={cart.cartItems.length === 0}
+                onClick={placeOrderHandler}
+              >
+                Place Order
+                {isLoading && (
+                  <div className="h-5 w-5">
+                    <Loader />
+                  </div>
+                )}
+              </button>
+              {error && <p>Error: {error.data.message}</p>}
+            </div>
+          </div>
         </div>
       </div>
     </>
