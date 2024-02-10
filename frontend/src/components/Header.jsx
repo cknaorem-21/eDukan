@@ -34,17 +34,16 @@ const Header = () => {
     <header className="flex justify-between items-center w-full h-[4rem] bg-gray-800 p-8">
       <Link to="/" className="text-white h-fit w-fit">
         <FiShoppingBag className="inline text-[2rem]" />
-        <span className="p-2">e-MARKET</span>
+        <span className="p-2">e-DUKAN</span>
       </Link>
       <nav className="text-white flex gap-4">
-        <NavLink to="/cart" className="relative pr-4">
+        <NavLink to="/cart" className="relative flex items-center gap-1 pr-5">
           <FaShoppingCart className="inline" />
-          <span className="p-1">Cart</span>
+          <span>Cart</span>
           {
-            // console.log('cartItems.length ', cartItems.length)
             cartItems.length > 0 && (
               // Cart items badge
-              <div className="flex justify-center items-center absolute top-0 right-0 w-3 h-3 bg-blue-500 rounded-full text-xs p-2">
+              <div className="flex justify-center items-center absolute top-0 right-0 w-1 h-1 bg-yellow-400 rounded-full text-black font-semibold text-xs p-2">
                 <div>{cartItems.reduce((a, item) => a + item.quantity, 0)}</div>
               </div>
             )
@@ -52,7 +51,7 @@ const Header = () => {
         </NavLink>
 
         {userInfo ? (
-          <div className="relative p-1 select-none">
+          <div className="relative select-none">
             <div
               onClick={() => setDropdown(!dropdown)}
               className={`flex items-center gap-1 cursor-pointer ${
@@ -91,7 +90,7 @@ const Header = () => {
         )}
 
         { userInfo && userInfo.isAdmin && (
-          <div className="relative p-1 select-none">
+          <div className="relative select-none">
           <div
             onClick={() => setAdminDropdown(!adminDropdown)}
             className={`flex items-center gap-1 cursor-pointer ${

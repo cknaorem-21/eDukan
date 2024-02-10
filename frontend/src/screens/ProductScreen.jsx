@@ -116,8 +116,8 @@ const ProductScreen = () => {
           <div className="space-y-3">
             <div className="flex justify-between w-full">
               {/* Image */}
-              <div className="w-[33%] h-fit border border-gray-200 rounded p-2">
-                <img src={product.image} alt="image" />
+              <div className="w-[33%] h-max border border-gray-200 rounded p-2">
+                <img src={product.image} alt="image"/>
               </div>
 
               {/* Title, Rating, Description */}
@@ -130,15 +130,17 @@ const ProductScreen = () => {
                     reviewCount={product.numReviews}
                   />
                 </div>
-                <p>{product.description}</p>
-                {}
+
+                <div className='h-[300px] overflow-y-auto'>
+                  <p>{product.description}</p>
+                </div>
               </div>
 
               {/* Price, Status, Quantity, Add to cart */}
               <div className="w-[33%] h-fit border border-gray-200 rounded">
                 <div className="w-full border-b border-gray-200 p-2">
                   Price :{" "}
-                  <span className="font-medium">&#8377; {product.price}</span>
+                  <span className="font-medium">&#8377; {product.price.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="w-full border-b border-gray-200 p-2">
                   Status :{" "}

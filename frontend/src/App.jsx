@@ -8,7 +8,7 @@ const App = () => {
     <>
       <Header/>
 
-      <main className="p-8">
+      <main className="p-8 min-h-[90vh]">
         <Outlet/>
       </main>
       
