@@ -1,6 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 
@@ -12,7 +10,7 @@ const HomeScreen = () => {
   return (
     <>
       {isLoading ? (
-        <div className="w-screen h-screen">
+        <div className="w-full h-[70vh]">
           <Loader />
         </div>
       ) : error ? (

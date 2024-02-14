@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Message from "../components/Message";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
@@ -38,7 +38,13 @@ const ProfileScreen = () => {
     console.log("Submit Handler");
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error("Password and comfirm password do not match");
+      toast.error("Password and comfirm password do not match", {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     } else {
       try {
         const res = await updateProfile({
@@ -48,10 +54,21 @@ const ProfileScreen = () => {
           password,
         }).unwrap();
         dispatch(setCredentials(res));
-        toast.success("Profile updated successfully");
+        toast.success("Profile updated successfully", {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       } catch (error) {
-        // toast.error('Some error occured')
-        toast.error(error?.data?.message || error.error);
+        toast.error(error?.data?.message || error.error, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       }
     }
   };
@@ -211,7 +228,7 @@ const ProfileScreen = () => {
           <h1 className="text-2xl font-bold mb-2">My Orders</h1>
 
           {isLoading ? (
-            <div>
+            <div className="w-full h-[70vh]">
               <Loader />
             </div>
           ) : error ? (

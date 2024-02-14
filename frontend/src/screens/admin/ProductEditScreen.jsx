@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Message from "../../components/Message";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
   useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
+import Loader from "../../components/Loader";
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -29,7 +30,8 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-  const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
 
   const navigate = useNavigate();
 
@@ -60,22 +62,46 @@ const ProductEditScreen = () => {
 
     const result = await updateProduct(updatedProduct);
     if (result.error) {
-      toast.error(result.error);
+      toast.error(result.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     } else {
-      toast.success("Product updated");
+      toast.success("Product updated", {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
       navigate("/admin/productlist");
     }
   };
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
-    formData.append('image', e.target.files[0]);
+    formData.append("image", e.target.files[0]);
     try {
       const res = await uploadProductImage(formData).unwrap();
-      toast.success(res.message);
-      setImage(res.image.replace('..\\backend', ''));
+      toast.success(res.message, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
+      setImage(res.image.replace("..\\backend", ""));
     } catch (error) {
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 
@@ -93,10 +119,10 @@ const ProductEditScreen = () => {
         <div className="w-[50%] border border-gray-300 shadow-md rounded p-3">
           <h1 className="text-center text-2xl font-extrabold">Edit product</h1>
 
-          {loadingUpdate && <p>Loading</p>}
-
           {isLoading ? (
-            <p>Loading</p>
+            <div className="w-full h-[60vh] my-auto">
+              <Loader />
+            </div>
           ) : error ? (
             <Message color="red">{error}</Message>
           ) : (
@@ -107,7 +133,11 @@ const ProductEditScreen = () => {
                     Image
                   </label>
                   <div className="border border-gray-400 rounded divide-y">
-                    <img src={image} alt={image} className='h-[10rem] m-auto border border-gray-400'/>
+                    <img
+                      src={image}
+                      alt={image}
+                      className="h-[10rem] m-auto border border-gray-400"
+                    />
                     <input
                       id="img"
                       type="file"
@@ -196,14 +226,7 @@ const ProductEditScreen = () => {
                   <label htmlFor="description" className="text-gray-700 ">
                     Description
                   </label>
-                  {/* <input
-                  id="description"
-                  type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded"
-                  required
-                /> */}
+            
                   <textarea
                     name="description"
                     id="description"
@@ -216,9 +239,14 @@ const ProductEditScreen = () => {
 
                 <button
                   type="submit"
-                  className="bg-gray-800 rounded text-white font-bold p-2"
+                  className="flex justify-center gap-2 bg-gray-800 rounded text-white font-bold p-2"
                 >
                   Update
+                  {loadingUpdate && (
+                    <div className="h-5 w-5">
+                      <Loader />
+                    </div>
+                  )}
                 </button>
               </div>
             </form>

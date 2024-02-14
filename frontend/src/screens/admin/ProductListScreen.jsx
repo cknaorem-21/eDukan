@@ -2,42 +2,66 @@ import { Link } from "react-router-dom";
 import { FaTimes, FaEdit } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import Message from "../../components/Message";
-import { 
-  useGetProductsQuery, 
+import {
+  useGetProductsQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
 } from "../../slices/productsApiSlice";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
+import Loader from "../../components/Loader";
 
 const ProductListScreen = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
 
-  const [ createProduct, {isLoading: loadingCreate}] = useCreateProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
-  const [ deleteProduct, {isLoading: loadingDelete}] = useDeleteProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
 
   const deleteHandler = async (product) => {
-    if(window.confirm(`Are you sure you want to delete this product: \n${product.name}?`))
-    
-    try {
-      await deleteProduct(product._id);
-      toast.success('Product deleted');
-      refetch();  
-    } catch (error) {
-      toast.error(error?.data?.message || error.error);
-    }
+    if (
+      window.confirm(
+        `Are you sure you want to delete this product: \n${product.name}?`
+      )
+    )
+      try {
+        await deleteProduct(product._id);
+        toast.success("Product deleted", {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
+        refetch();
+      } catch (error) {
+        toast.error(error?.data?.message || error.error, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
+      }
   };
 
   const createProductHandler = async () => {
-    if(window.confirm('Are you sure you want to create a new product?')) {
+    if (window.confirm("Are you sure you want to create a new product?")) {
       try {
         await createProduct();
         refetch();
       } catch (error) {
-        toast.error(error?.data?.message || error.error);
+        toast.error(error?.data?.message || error.error, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       }
     }
-  }
+  };
 
   return (
     <>
@@ -46,18 +70,23 @@ const ProductListScreen = () => {
           <h1 className="text-2xl font-bold pb-4">Products</h1>
           <button
             className="flex gap-2 items-center text-white bg-gray-800 rounded p-1 hover:bg-gray-700 px-2 py-1"
-            onClick={ createProductHandler }
+            onClick={createProductHandler}
           >
             <span className="text-sm">Create new product</span>
             <FaEdit className="text-[15px] text-white" />
+
+            {loadingCreate && (
+              <div className="h-5 w-5">
+                <Loader />
+              </div>
+            )}
           </button>
         </div>
 
-        {loadingCreate && <p>Loading...</p>}
-        {loadingDelete && <p>Loading...</p>}
-
-        {isLoading ? (
-          <p>Loading...</p>
+        {isLoading || loadingDelete ? (
+          <div className="w-full h-[50vh] my-auto">
+            <Loader />
+          </div>
         ) : error ? (
           <Message color="red">{error}</Message>
         ) : (

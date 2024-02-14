@@ -3,6 +3,7 @@ import Rating from "./Rating";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { toast, Flip } from "react-toastify"; 
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
@@ -12,6 +13,13 @@ const Product = ({ product }) => {
   const addToCartHandler = async (e) => {
     e.stopPropagation();
     dispatch(addToCart({ ...product, quantity: 1 }));
+    toast.success("Item added to cart !", {
+      position: "bottom-center",
+      autoClose: 500,
+      hideProgressBar: true,
+      transition: Flip,
+      theme: "colored",
+    });
   };
 
   return (

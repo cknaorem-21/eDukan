@@ -80,9 +80,9 @@ const CartScreen = () => {
                             {
                                 cartItems.map((item) => (
                                     <div key={item._id} className='flex gap-4 border h-fit w-full border-gray-300 rounded-md m-1'>
-                                        <img src={item.image} alt={item.name} className='rounded h-[100px] m-1'/>
+                                        <img src={item.image} alt={item.name} className='rounded h-[150px] aspect-square m-1 my-auto p-3'/>
                                         <div className='flex items-center w-60'>
-                                            <Link to={`/product/${item._id}`} className='underline'>{item.name}</Link>
+                                            <Link to={`/product/${item._id}`} className='underline p-3'>{item.name}</Link>
                                         </div>
                                         <div className='flex items-center font-medium min-w-28'>
                                         &#8377; {item.price}

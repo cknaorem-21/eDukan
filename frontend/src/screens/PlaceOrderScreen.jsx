@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import Loader from "../components/Loader";
 
 const PlaceOrderScreen = () => {
@@ -39,7 +39,13 @@ const PlaceOrderScreen = () => {
       navigate(`/order/${res._id}`);
     } catch (error) {
       console.log(error);
-      toast.error(error.data.message);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 

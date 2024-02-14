@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import Message from "../../components/Message";
 import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
+import Loader from "../../components/Loader";
 
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
@@ -12,7 +13,9 @@ const OrderListScreen = () => {
       <h1 className="text-2xl font-bold pb-4">All Orders</h1>
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="w-full h-[50vh] my-auto">
+          <Loader />
+        </div>
       ) : error ? (
         <Message color="red">{error}</Message>
       ) : (

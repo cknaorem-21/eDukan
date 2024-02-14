@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import Loader from "../components/Loader";
 
 const LoginScreen = () => {
@@ -36,7 +36,13 @@ const LoginScreen = () => {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (error) {
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 

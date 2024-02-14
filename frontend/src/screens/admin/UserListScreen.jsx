@@ -6,7 +6,8 @@ import {
   useGetUsersQuery,
   useDeleteUserMutation,
 } from "../../slices/usersApiSlice";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
+import Loader from "../../components/Loader";
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
@@ -17,10 +18,22 @@ const UserListScreen = () => {
     if (window.confirm(`Are you sure you want to delete user:\n${user.name}`)) {
       try {
         await deleteUser(user._id);
-        toast.success(`User "${user.name}" deleted successfully`);
+        toast.success(`User "${user.name}" deleted successfully`, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
         refetch();
       } catch (error) {
-        toast.error(error?.data?.message || error.error);
+        toast.error(error?.data?.message || error.error, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       }
     }
   };
@@ -29,9 +42,10 @@ const UserListScreen = () => {
     <>
       <h1 className="text-2xl font-bold pb-4">All Users</h1>
 
-      {loadingDelete && <p>Loading...</p>}
-      {isLoading ? (
-        <p>Loading...</p>
+      {isLoading || loadingDelete ? (
+        <div className="w-full h-[50vh] my-auto">
+          <Loader />
+        </div>
       ) : error ? (
         <Message color="red">{error}</Message>
       ) : (

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRegisterMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import Loader from "../components/Loader";
 
 const RegisterScreen = () => {
@@ -34,18 +34,29 @@ const RegisterScreen = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Password and confirm password do not match");
+      toast.error("Password and confirm password do not match", {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
       return;
     }
 
     try {
-      // console.log('try block')
       const res = await register({ name, email, password }).unwrap();
       console.log(res);
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (error) {
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 

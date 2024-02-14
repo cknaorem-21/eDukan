@@ -7,7 +7,7 @@ import {
 } from "../slices/productsApiSlice";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify";
 import QuantityPicker from "../components/QuantityPicker";
 import RatingSelect from "../components/RatingSelect";
 import Message from "../components/Message";
@@ -67,12 +67,16 @@ const ProductScreen = () => {
   };
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const addToCartHandler = async () => {
     dispatch(addToCart({ ...product, quantity }));
-    // navigate('/cart')
-    toast.success("Item added to cart");
+    toast.success("Item added to cart !", {
+      position: "bottom-center",
+      autoClose: 500,
+      hideProgressBar: true,
+      transition: Flip,
+      theme: "colored",
+    });
   };
 
   const submitHandler = async (e) => {
@@ -91,7 +95,13 @@ const ProductScreen = () => {
     } catch (error) {
       console.log(product.reviews);
       console.log(error);
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 
@@ -106,7 +116,7 @@ const ProductScreen = () => {
       </div>
 
       {isLoading ? (
-        <div className="w-screen h-screen">
+        <div className="w-full h-[70vh]">
           <Loader />
         </div>
       ) : error ? (
@@ -249,7 +259,7 @@ const ProductScreen = () => {
                 </div>
 
                 {loadingProductReview && (
-                  <div className="bg-red-200">
+                  <div className="w-full h-fit">
                     <Loader />
                   </div>
                 )}

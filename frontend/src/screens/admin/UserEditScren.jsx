@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Message from "../../components/Message";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify";
 import {
   useUpdateUserMutation,
   useGetUserDetailsQuery,
 } from "../../slices/usersApiSlice";
+import Loader from "../../components/Loader";
 
 const UserEditScreen = () => {
   const { id: userId } = useParams();
@@ -21,8 +22,7 @@ const UserEditScreen = () => {
     error,
   } = useGetUserDetailsQuery(userId);
 
-  const [updateUser, { isLoading: loadingUpdate }] =
-    useUpdateUserMutation();
+  const [updateUser, { isLoading: loadingUpdate }] = useUpdateUserMutation();
 
   const navigate = useNavigate();
 
@@ -37,12 +37,24 @@ const UserEditScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-        await updateUser({userId, name, email, isAdmin});
-        toast.success('User updated successfully');
-        refetch();
-        navigate('/admin/userlist');
+      await updateUser({ userId, name, email, isAdmin });
+      toast.success("User updated successfully", {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
+      refetch();
+      navigate("/admin/userlist");
     } catch (error) {
-        toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 
@@ -60,10 +72,10 @@ const UserEditScreen = () => {
         <div className="w-[50%] border border-gray-300 shadow-md rounded p-3">
           <h1 className="text-center text-2xl font-extrabold">Edit user</h1>
 
-          {loadingUpdate && <p>Loading</p>}
-
           {isLoading ? (
-            <p>Loading</p>
+            <div className="w-full h-[40vh] my-auto">
+              <Loader />
+            </div>
           ) : error ? (
             <Message color="red">{error}</Message>
           ) : (
@@ -114,9 +126,14 @@ const UserEditScreen = () => {
 
                 <button
                   type="submit"
-                  className="bg-gray-800 rounded text-white font-bold p-2"
+                  className="flex justify-center gap-2 bg-gray-800 rounded text-white font-bold p-2"
                 >
                   Update
+                  {loadingUpdate && (
+                    <div className="h-5 w-5">
+                      <Loader />
+                    </div>
+                  )}
                 </button>
               </div>
             </form>

@@ -8,7 +8,7 @@ import {
 } from "../slices/ordersApiSlice";
 import Message from "../components/Message";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import { toast } from "react-toastify";
+import { toast, Flip } from "react-toastify"; 
 import { useSelector } from "react-redux";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Loader from "../components/Loader";
@@ -65,9 +65,21 @@ const OrderScreen = () => {
       try {
         await payOrder({ orderId, details });
         refetch();
-        toast.success("Payment successful");
+        toast.success("Payment successful", {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       } catch (error) {
-        toast.error(error?.data?.message || error.message);
+        toast.error(error?.data?.message || error.error, {
+          position: "bottom-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          transition: Flip,
+          theme: "colored",
+        });
       }
     });
   };
@@ -75,11 +87,23 @@ const OrderScreen = () => {
   const onApproveTest = async () => {
     await payOrder({ orderId, details: { payer: {} } });
     refetch();
-    toast.success("Payment successful");
+    toast.success("Payment successful", {
+      position: "bottom-center",
+      autoClose: 500,
+      hideProgressBar: true,
+      transition: Flip,
+      theme: "colored",
+    });
   };
 
   const onError = (error) => {
-    toast.error(error.message);
+    toast.error(error?.data?.message || error.error, {
+      position: "bottom-center",
+      autoClose: 500,
+      hideProgressBar: true,
+      transition: Flip,
+      theme: "colored",
+    });
   };
 
   const createOrder = (data, actions) => {
@@ -103,15 +127,27 @@ const OrderScreen = () => {
     try {
       await deliverOrder(orderId);
       refetch();
-      toast.success("Order delivered");
+      toast.success("Order delivered", {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     } catch (error) {
-      toast.error(error?.data?.message || error.message);
+      toast.error(error?.data?.message || error.error, {
+        position: "bottom-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        transition: Flip,
+        theme: "colored",
+      });
     }
   };
 
   return isLoading ? (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-full h-[70vh]">
         <Loader />
       </div>
     </>
@@ -201,7 +237,7 @@ const OrderScreen = () => {
                 <div className="flex gap-2">
                   <div className="text-center divide-y">
                     <p className="font-semibold p-1">Unit Price</p>
-                    <p className="p-1">&#8377; {item.price}</p>
+                    <p className="p-1">&#8377; {item.price.toLocaleString('en-IN')}</p>
                   </div>
 
                   <div className="text-center divide-y divide-gray-300">
@@ -211,7 +247,7 @@ const OrderScreen = () => {
 
                   <div className="text-center divide-y">
                     <p className="font-semibold p-1">Total</p>
-                    <p className="p-1">{item.quantity * item.price}</p>
+                    <p className="p-1">{(item.quantity * item.price).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               </div>
@@ -223,29 +259,33 @@ const OrderScreen = () => {
         <div className="flex flex-col gap-2 w-[30%] h-fit shadow-lg border border-gray-400 rounded-md m-1 p-4">
           <div className="text-center text-xl font-semibold">Order Summary</div>
           <hr className="border-1-2 border-gray-300" />
-          <div className="">
-            <span className="font-semibold">Total items: </span>
-            {order.orderItems.reduce((acc, item) => acc + item.quantity, 0)}
-          </div>
+          <div>
+            <table className="w-full">
+              <tr>
+                <td className="text-left">Total item(s): </td>
+                <td className="text-right font-semibold">{order.orderItems.reduce((acc, item) => acc + item.quantity, 0)}</td>
+              </tr>
 
-          <div className="">
-            <span className="font-semibold">Total Price: </span>
-            &#8377;{order.itemsPrice}
-          </div>
+              <tr>
+                <td className="text-left">Total price: </td>
+                <td className="text-right font-semibold">&#8377; {order.itemsPrice.toLocaleString('en-IN')}</td>
+              </tr>
 
-          <div className="">
-            <span className="font-semibold">Shipping Price: </span>
-            &#8377;{order.shippingPrice}
-          </div>
+              <tr>
+                <td className="text-left">Shipping price: </td>
+                <td className="text-right font-semibold">&#8377; {order.shippingPrice.toLocaleString('en-IN')}</td>
+              </tr>
 
-          <div className="">
-            <span className="font-semibold">Tax: </span>
-            &#8377;{order.taxPrice}
-          </div>
+              <tr>
+                <td className="text-left">Tax: </td>
+                <td className="text-right font-semibold">&#8377; {order.taxPrice.toLocaleString('en-IN')}</td>
+              </tr>
 
-          <div className="">
-            <span className="font-semibold">Grand total: </span>
-            &#8377;{order.totalPrice}
+              <tr>
+                <td className="text-left">Grand total: </td>
+                <td className="text-right font-semibold">&#8377; {order.totalPrice.toLocaleString('en-IN')}</td>
+              </tr>
+            </table>
           </div>
 
           <hr className="border-1-2 border-gray-300" />
@@ -253,13 +293,13 @@ const OrderScreen = () => {
             {!order.isPaid && (
               <div>
                 {loadingPay && (
-                  <div className="w-screen h-screen">
+                  <div className="w-full h-fit">
                     <Loader />
                   </div>
                 )}
 
                 {isPending ? (
-                  <div className="w-screen h-screen">
+                  <div className="w-full h-fit">
                     <Loader />
                   </div>
                 ) : (
@@ -282,7 +322,7 @@ const OrderScreen = () => {
             )}
 
             {loadingDeliver && (
-              <div className="w-screen h-screen">
+              <div className="w-full h-fit">
                 <Loader />
               </div>
             )}
