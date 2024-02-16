@@ -3,7 +3,7 @@ const Message = ({ children, color }) => {
     <>
       {color == "blue" && (
         <div
-          className={`bg-blue-200 text-blue-700 border-blue-500 rounded border p-3`}
+          className={`bg-blue-200 text-blue-700 border-blue-500 rounded border p-3 w-full`}
         >
           {children}
         </div>
@@ -11,7 +11,7 @@ const Message = ({ children, color }) => {
 
       {color == "red" && (
         <div
-          className={`bg-red-200 text-red-700 border-red-500 rounded border p-3`}
+          className={`bg-red-200 text-red-700 border-red-500 rounded border p-3 w-full`}
         >
           {children}
         </div>
@@ -19,7 +19,7 @@ const Message = ({ children, color }) => {
 
       {color == "green" && (
         <div
-          className={`bg-green-200 text-green-700 border-green-500 rounded border p-3`}
+          className={`bg-green-200 text-green-700 border-green-500 rounded border p-3 w-full`}
         >
           {children}
         </div>

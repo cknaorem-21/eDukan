@@ -5,9 +5,9 @@ const Footer = () => {
 
   return (
     <>
-        <footer className="flex flex-col justify-center items-center w-full bg-gray-300 p-2">
+        <footer className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] flex flex-col justify-center items-center w-full bg-gray-300 p-2">
           <p>eDUKAN &copy; {currentYear}</p>
-          <p className="italic text-sm text-gray-800">All rights reserved</p>
+          <p className="italic text-[0.7em] text-gray-800">All rights reserved</p>
         </footer>
     </>
   );

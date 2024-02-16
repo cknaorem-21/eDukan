@@ -27,11 +27,11 @@ const PaymentScreen = () => {
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] space-y-6">
         <CheckoutSteps step1 step2 step3 />
         <div className="flex justify-center">
-          <div className="space-y-4 w-[40%] border border-gray-300 shadow-md rounded p-3">
-            <h1 className="text-center text-2xl font-extrabold">Payment</h1>
+          <div className="space-y-4 w-full md:w-[70%] lg:w-[50%] border border-gray-300 shadow-md rounded p-3">
+            <h1 className="text-center text-[1.5em] font-extrabold">Payment</h1>
 
             <h1>Choose Payment Method</h1>
 

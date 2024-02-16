@@ -62,9 +62,9 @@ const RegisterScreen = () => {
 
   return (
     <>
-      <div className="flex justify-center">
-        <div className="w-[40%] border border-gray-300 shadow-md rounded p-3">
-          <h1 className="text-center text-2xl font-extrabold">Register</h1>
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] flex justify-center">
+        <div className="w-full md:w-[80%] lg:w-[50%] border border-gray-300 shadow-md rounded p-3">
+          <h1 className="text-center text-[1.5em] font-extrabold">Register</h1>
 
           <form onSubmit={submitHandler}>
             <div className="flex flex-col gap-3">

@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex justify-between items-center w-full h-[4rem] bg-gray-800 p-8">
+    <header className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] flex justify-between items-center w-full h-[4rem] bg-gray-800 p-8">
       <Link to="/" className="text-white h-fit w-fit">
         <FiShoppingBag className="inline text-[2rem]" />
         <span className="p-2">e-DUKAN</span>

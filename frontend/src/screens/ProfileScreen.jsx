@@ -89,10 +89,10 @@ const ProfileScreen = () => {
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] flex flex-col lg:flex-row gap-2">
         {/* Profile details and update part */}
-        <div className="w-1/4 border rounded border-gray-300 p-2 h-max">
-          <h1 className="text-2xl font-bold mb-2">Profile</h1>
+        <div className="w-full lg:w-1/4 border rounded border-gray-300 p-2 h-max">
+          <h1 className="text-[1.5em] font-bold mb-2">Profile</h1>
 
           {updateMode === true ? (
             <>
@@ -158,7 +158,7 @@ const ProfileScreen = () => {
                       </div>
 
                       <button
-                        className="border border-gray-300 bg-gray-200 rounded px-1 text-sm"
+                        className="border border-gray-300 bg-gray-200 rounded px-1 text-[0.875em]"
                         onClick={keepOldPasswordHandler}
                       >
                         Keep existing password
@@ -166,7 +166,7 @@ const ProfileScreen = () => {
                     </>
                   ) : (
                     <button
-                      className="border border-gray-300 bg-gray-200 rounded px-1 text-sm"
+                      className="border border-gray-300 bg-gray-200 rounded px-1 text-[0.875em]"
                       onClick={() => setPasswordUpdateMode(true)}
                     >
                       Change password
@@ -213,7 +213,7 @@ const ProfileScreen = () => {
 
               <div className="mt-2">
                 <button
-                  className="border border-gray-300 bg-gray-200 rounded px-1 text-sm"
+                  className="border border-gray-300 bg-gray-200 rounded px-1 text-[0.875em]"
                   onClick={() => setUpdateMode(true)}
                 >
                   Update Account
@@ -224,8 +224,8 @@ const ProfileScreen = () => {
         </div>
 
         {/* Orders part  */}
-        <div className="w-3/4 border rounded border-gray-300 p-2 h-max">
-          <h1 className="text-2xl font-bold mb-2">My Orders</h1>
+        <div className="w-full lg:w-3/4 border rounded border-gray-300 p-2 h-max">
+          <h1 className="text-[1.5em] font-bold mb-2">My Orders</h1>
 
           {isLoading ? (
             <div className="w-full h-[70vh]">
@@ -237,43 +237,43 @@ const ProfileScreen = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-500 bg-blue-300">
-                  <th>ID</th>
-                  <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
-                  <th>DELIVERED</th>
-                  <th></th>
+                  <th className="hidden md:table-cell">ID</th>
+                  <th className="hidden md:table-cell">DATE</th>
+                  <th className="hidden md:table-cell">TOTAL</th>
+                  <th className="hidden md:table-cell">PAID</th>
+                  <th className="hidden md:table-cell">DELIVERED</th>
+                  <th className="hidden md:table-cell"></th>
                 </tr>
               </thead>
 
-              <tbody className="text-center">
+              <tbody className="md:text-center">
                 {orders.map((order) => (
                   <tr
                     key={order._id}
-                    className="border-b border-gray-500 h-10 hover:bg-gray-300 odd:bg-gray-200 select-none"
+                    className="md:h-10 hover:bg-gray-300 odd:bg-gray-100 even:bg-gray-200 select-none"
                   >
-                    <td>{order._id}</td>
-                    <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>&#8377; {order.totalPrice}</td>
-                    <td>
-                      <div className="flex justify-center">
+                    <td className='block py-1 px-2 before:content-["ID\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{order._id}</td>
+                    <td className='block py-1 px-2 before:content-["DATE\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{order.createdAt.substring(0, 10)}</td>
+                    <td className='block py-1 px-2 before:content-["TOTAL\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell whitespace-nowrap'>&#8377; {order.totalPrice.toLocaleString('en-IN')}</td>
+                    <td className='block py-1 px-2 before:content-["PAID\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>
+                      <div className="inline md:flex justify-center">
                         {order.isPaid ? (
                           order.paidAt.substring(0, 10)
                         ) : (
-                          <FaTimes className="text-red-500" />
+                          <FaTimes className="text-red-500 inline" />
                         )}
                       </div>
                     </td>
-                    <td>
-                      <div className="flex justify-center">
+                    <td className='block py-1 px-2 before:content-["DELIVERED\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>
+                      <div className="inline md:flex justify-center">
                         {order.isDelivered ? (
                           order.deliveredAt.substring(0, 10)
                         ) : (
-                          <FaTimes className="text-red-500" />
+                          <FaTimes className="text-red-500 inline" />
                         )}
                       </div>
                     </td>
-                    <td>
+                    <td className='block py-1 px-2 md:table-cell'>
                       <Link
                         to={`/order/${order._id}`}
                         className="text-blue-700"

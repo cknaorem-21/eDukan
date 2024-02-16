@@ -51,13 +51,13 @@ const PlaceOrderScreen = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] flex flex-col gap-4">
         <CheckoutSteps step1 step2 step3 step4 />
-        <div className="flex justify-between gap-3">
-          <div className="w-[70%] space-y-2">
+        <div className="flex flex-wrap justify-between gap-2">
+          <div className="w-full md:w-[69%] space-y-2">
             {/* Shipping details */}
             <div className="space-y-3 border border-gray-300 p-2 rounded">
-              <h2 className="text-2xl font-bold">Shipping</h2>
+              <h2 className="text-[1.5em] font-bold">Shipping</h2>
               <div>
                 <span className="font-semibold">Address: </span>
                 <span>
@@ -70,7 +70,7 @@ const PlaceOrderScreen = () => {
 
             {/* Payment method */}
             <div className="space-y-3 border border-gray-300 p-2 rounded">
-              <h2 className="text-2xl font-bold">Payment</h2>
+              <h2 className="text-[1.5em] font-bold">Payment</h2>
               <div>
                 <span className="font-semibold">Method: </span>
                 <span>{cart.paymentMethod}</span>
@@ -79,7 +79,7 @@ const PlaceOrderScreen = () => {
 
             {/* Order items */}
             <div className="space-y-3 border border-gray-300 p-2 rounded">
-              <h2 className="text-2xl font-bold">Order items</h2>
+              <h2 className="text-[1.5em] font-bold">Order items</h2>
 
               {cart.cartItems.length === 0 ? (
                 <p>Your cart is empty</p>
@@ -87,13 +87,13 @@ const PlaceOrderScreen = () => {
                 cart.cartItems.map((item, index) => (
                   <div
                     key={index}
-                    className="flex gap-4 justify-between border border-gray-300 rounded pr-1"
+                    className="flex flex-col md:flex-row gap-4 justify-between border border-gray-300 rounded"
                   >
                     <div className="flex gap-4 items-center">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="rounded h-[100px] m-1"
+                        className="rounded h-[100px] aspect-square object-contain m-1"
                       />
                       <div>
                         <Link to={`/product/${item._id}`} className="underline">
@@ -103,20 +103,22 @@ const PlaceOrderScreen = () => {
                     </div>
 
                     <div className="flex gap-2">
-                      <div className="text-center divide-y">
-                        <p className="font-semibold p-1">Unit Price</p>
-                        <p className="p-1">&#8377; {item.price}</p>
-                      </div>
-
-                      <div className="text-center divide-y divide-gray-300">
-                        <p className="font-semibold p-1">Quantity</p>
-                        <p className="p-1">{item.quantity}</p>
-                      </div>
-
-                      <div className="text-center divide-y">
-                        <p className="font-semibold p-1">Total</p>
-                        <p className="p-1">{item.quantity * item.price}</p>
-                      </div>
+                      <table className="w-full md:w-[10rem]">
+                        <tbody className="whitespace-nowrap">
+                          <tr className="odd:bg-gray-100 even:bg-gray-200">
+                            <th className="text-left px-1">Price: </th>
+                            <td className="text-right px-1">&#8377; {Number(item.price).toLocaleString('en-IN')}</td>
+                          </tr>
+                          <tr className="odd:bg-gray-100 even:bg-gray-200">
+                            <th className="text-left px-1">Qty: </th>
+                            <td className="text-right px-1">{item.quantity}</td>
+                          </tr>
+                          <tr className="odd:bg-gray-100 even:bg-gray-200">
+                            <th className="text-left px-1">Total: </th>
+                            <td className="text-right px-1">&#8377; {Number(item.quantity * item.price).toLocaleString('en-IN')}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 ))
@@ -124,35 +126,43 @@ const PlaceOrderScreen = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 w-[30%] h-fit shadow-lg border border-gray-400 rounded-md m-1 p-4">
-            <div className="text-center text-xl font-semibold">
+          <div className="flex flex-col gap-2 w-full md:w-[28%] lg:w-[29%] h-fit shadow-lg border border-gray-400 rounded-md p-4">
+            <div className="text-center text-[1.25em] font-semibold">
               Order Summary
             </div>
+            
             <hr className="border-1-2 border-gray-300" />
-            <div className="">
-              <span className="font-semibold">Total items: </span>
-              {cart.cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-            </div>
 
-            <div className="">
-              <span className="font-semibold">Total Price: </span>
-              &#8377;{cart.itemsPrice}
-            </div>
+            <table className="w-full">
+              <tbody>
+              <tr className="odd:bg-gray-100 even:bg-gray-200">
+                <td className="text-left px-1">Total item(s): </td>
+                <td className="text-right font-semibold px-1">{cart.cartItems.reduce((acc, item) => acc + item.quantity, 0)}</td>
+              </tr>
 
-            <div className="">
-              <span className="font-semibold">Shipping Price: </span>
-              &#8377;{cart.shippingPrice}
-            </div>
+              <tr className="odd:bg-gray-100 even:bg-gray-200">
+                <td className="text-left px-1">Total price: </td>
+                <td className="text-right font-semibold whitespace-nowrap px-1">&#8377; {Number(cart.itemsPrice).toLocaleString('en-IN')}</td>
+              </tr>
 
-            <div className="">
-              <span className="font-semibold">Tax: </span>
-              &#8377;{cart.taxPrice}
-            </div>
+              <tr className="odd:bg-gray-100 even:bg-gray-200">
+                <td className="text-left px-1">Shipping price: </td>
+                <td className="text-right font-semibold whitespace-nowrap px-1">&#8377; {Number(cart.shippingPrice).toLocaleString('en-IN')}</td>
+              </tr>
 
-            <div className="">
-              <span className="font-semibold">Grand total: </span>
-              &#8377;{cart.totalPrice}
-            </div>
+              <tr className="odd:bg-gray-100 even:bg-gray-200">
+                <td className="text-left px-1">Tax: </td>
+                <td className="text-right font-semibold whitespace-nowrap px-1">&#8377; {Number(cart.taxPrice).toLocaleString('en-IN')}</td>
+              </tr>
+
+              <tr className="odd:bg-gray-100 even:bg-gray-200">
+                <td className="text-left px-1">Grand total: </td>
+                <td className="text-right font-semibold whitespace-nowrap px-1">&#8377; {Number(cart.totalPrice).toLocaleString('en-IN')}</td>
+              </tr>
+              </tbody>
+              
+            </table>
+
 
             <hr className="border-1-2 border-gray-300" />
             <div className="mt-1">

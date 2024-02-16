@@ -27,84 +27,86 @@ const ShippingScreen = () => {
 
   return (
     <>
-      <div className='space-y-6'>
-      <CheckoutSteps step1 step2/>
-      <div className="flex justify-center">
-        <div className="w-[40%] border border-gray-300 shadow-md rounded p-3">
-          <h1 className="text-center text-2xl font-extrabold">Shipping</h1>
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] space-y-6">
+        <CheckoutSteps step1 step2 />
+        <div className="flex justify-center">
+          <div className="w-full md:w-[70%] lg:w-[50%] border border-gray-300 shadow-md rounded p-3">
+            <h1 className="text-center text-[1.5em] font-extrabold">
+              Shipping
+            </h1>
 
-          <form onSubmit={submitHandler}>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col">
-                <label htmlFor="address" className="text-gray-700 ">
-                  Address
-                </label>
-                <input
-                  id="address"
-                  type="text"
-                  placeholder="Enter your address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded"
-                  required
-                />
+            <form onSubmit={submitHandler}>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col">
+                  <label htmlFor="address" className="text-gray-700 ">
+                    Address
+                  </label>
+                  <input
+                    id="address"
+                    type="text"
+                    placeholder="Enter your address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="city" className="text-gray-700 ">
+                    City
+                  </label>
+                  <input
+                    id="city"
+                    type="text"
+                    placeholder="Enter city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="postalCode" className="text-gray-700 ">
+                    Postal Code
+                  </label>
+                  <input
+                    id="postalCode"
+                    type="text"
+                    placeholder="Enter postal code / PIN code"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label htmlFor="country" className="text-gray-700 ">
+                    Country
+                  </label>
+                  <input
+                    id="country"
+                    type="text"
+                    placeholder="Enter country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="w-full p-2 border border-gray-400 rounded"
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="bg-gray-800 rounded text-white font-bold p-2"
+                >
+                  Continue
+                </button>
               </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="city" className="text-gray-700 ">
-                  City
-                </label>
-                <input
-                  id="city"
-                  type="text"
-                  placeholder="Enter city"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded"
-                  required
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="postalCode" className="text-gray-700 ">
-                  Postal Code
-                </label>
-                <input
-                  id="postalCode"
-                  type="text"
-                  placeholder="Enter postal code / PIN code"
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded"
-                  required
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label htmlFor="country" className="text-gray-700 ">
-                  Country
-                </label>
-                <input
-                  id="country"
-                  type="text"
-                  placeholder="Enter country"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  className="w-full p-2 border border-gray-400 rounded"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="bg-gray-800 rounded text-white font-bold p-2"
-              >
-                Continue
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
     </>
   );

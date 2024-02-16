@@ -65,15 +65,15 @@ const ProductListScreen = () => {
 
   return (
     <>
-      <div className="space-y-2">
+      <div className="text-[0.75rem] sm:text-[0.8rem] md:text-[0.85rem] lg:text-[1rem] space-y-2">
         <div className="flex justify-between items-end">
-          <h1 className="text-2xl font-bold pb-4">Products</h1>
+          <h1 className="text-[1.5em] font-bold pb-4">Products</h1>
           <button
             className="flex gap-2 items-center text-white bg-gray-800 rounded p-1 hover:bg-gray-700 px-2 py-1"
             onClick={createProductHandler}
           >
-            <span className="text-sm">Create new product</span>
-            <FaEdit className="text-[15px] text-white" />
+            <span className="text-[0.875em]">Create new product</span>
+            <FaEdit className="text-[1em] text-white" />
 
             {loadingCreate && (
               <div className="h-5 w-5">
@@ -94,42 +94,42 @@ const ProductListScreen = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-500 bg-blue-300">
-                  <th>ID</th>
-                  <th>NAME</th>
-                  <th>PRICE</th>
-                  <th>CATEGORY</th>
-                  <th>BRAND</th>
-                  <th></th>
-                  <th></th>
+                  <th className="hidden md:table-cell">ID</th>
+                  <th className="hidden md:table-cell">NAME</th>
+                  <th className="hidden md:table-cell">PRICE</th>
+                  <th className="hidden md:table-cell">CATEGORY</th>
+                  <th className="hidden md:table-cell">BRAND</th>
+                  <th className="hidden md:table-cell"></th>
+                  <th className="hidden md:table-cell"></th>
                 </tr>
               </thead>
 
-              <tbody className="text-center">
+              <tbody className="md:text-center">
                 {products.map((product) => (
                   <tr
                     key={product._id}
-                    className="border-b border-gray-500 h-10 hover:bg-gray-300 odd:bg-gray-200 select-none"
+                    className="md:h-10 hover:bg-gray-300 odd:bg-gray-100 even:bg-gray-200 select-none"
                   >
-                    <td>{product._id}</td>
-                    <td>{product.name}</td>
-                    <td>{product.price}</td>
-                    <td>{product.category}</td>
-                    <td>{product.brand}</td>
-                    <td>
+                    <td className='block py-1 px-2 before:content-["ID\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{product._id}</td>
+                    <td className='block py-1 px-2 before:content-["NAME\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{product.name}</td>
+                    <td className='block py-1 px-2 before:content-["PRICE\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{product.price.toLocaleString('en-IN')}</td>
+                    <td className='block py-1 px-2 before:content-["CATEGORY\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{product.category}</td>
+                    <td className='block py-1 px-2 before:content-["BRAND\:"] before:pr-2 before:font-bold before:text-left md:before:hidden md:table-cell'>{product.brand}</td>
+                    <td className='block py-1 px-2 md:table-cell'>
                       <Link to={`/admin/product/${product._id}/edit`}>
                         <button className="flex gap-1 items-center border border-gray-300 bg-gray-200 rounded p-1 hover:bg-gray-300">
-                          <span className="text-sm">Edit</span>
-                          <FaEdit className="text-[15px] text-gray-700 border" />
+                          <span className="text-[0.875em]">Edit</span>
+                          <FaEdit className="text-[1em] text-gray-700 border" />
                         </button>
                       </Link>
                     </td>
-                    <td>
+                    <td className='block py-1 px-2 md:table-cell'>
                       <button
                         className="flex gap-1 items-center border border-gray-300 bg-gray-200 rounded p-1 hover:bg-gray-300"
                         onClick={() => deleteHandler(product)}
                       >
-                        <span className="text-sm">Delete</span>
-                        <FaTrashCan className="text-[15px] text-red-700" />
+                        <span className="text-[0.875em]">Delete</span>
+                        <FaTrashCan className="text-[1em] text-red-700" />
                       </button>
                     </td>
                   </tr>
