@@ -4,8 +4,9 @@ import Rating from "../components/Rating";
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
+  productsApiSlice,
 } from "../slices/productsApiSlice";
-import { addToCart } from "../slices/cartSlice";
+import { addToCart, removeFromCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Flip } from "react-toastify";
 import RatingSelect from "../components/RatingSelect";
@@ -30,6 +31,9 @@ const ProductScreen = () => {
     useCreateReviewMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
+
+  let itemInCart = cartItems.find((item) => item._id === productId);
 
   // quantity - input field out-of-focus handling
   const handleInputOnBlur = () => {
@@ -67,15 +71,27 @@ const ProductScreen = () => {
 
   const dispatch = useDispatch();
 
-  const addToCartHandler = async () => {
-    dispatch(addToCart({ ...product, quantity }));
-    toast.success("Item added to cart !", {
+  const cartButtonHandler = async () => {
+    if(itemInCart) {
+      dispatch(removeFromCart(productId));
+      toast.success("Item removed from cart !", {
       position: "bottom-center",
       autoClose: 500,
       hideProgressBar: true,
       transition: Flip,
       theme: "colored",
-    });
+      });
+      itemInCart = null;
+    } else {
+      dispatch(addToCart({ ...product, quantity }));
+      toast.success("Item added to cart !", {
+      position: "bottom-center",
+      autoClose: 500,
+      hideProgressBar: true,
+      transition: Flip,
+      theme: "colored",
+      });
+    }
   };
 
   const submitHandler = async (e) => {
@@ -191,14 +207,15 @@ const ProductScreen = () => {
                   <div className="p-2 text-center">
                     <button
                       className={`${
-                        product.countInStock >= 1
+                        product.countInStock >= 1 && !itemInCart 
                           ? "bg-yellow-400 hover:bg-yellow-300"
-                          : "bg-gray-300 opacity-70"
+                          : product.countInStock < 1 ? "bg-gray-300 opacity-70" :"bg-gray-300"
                       } border rounded p-2`}
-                      onClick={addToCartHandler}
+                      onClick={cartButtonHandler}
+                      disabled={ product.countInStock < 1 }
                     >
-                      Add to cart
-                    </button>
+                      {itemInCart ? "Remove from cart" : "Add to cart"}
+                    </button> 
                   </div>
                 </div>
               </div>
@@ -208,7 +225,9 @@ const ProductScreen = () => {
                 {/* Write review */}
                 <div className="md:w-1/2 space-y-2">
                   <div className="bg-gray-300 py-2 px-4 rounded">
-                    <h2 className="text-[1.125em] font-semibold">Write a review</h2>
+                    <h2 className="text-[1.125em] font-semibold">
+                      Write a review
+                    </h2>
                   </div>
 
                   {userInfo ? (
