@@ -29,6 +29,8 @@ This is an e-commerce web application built using the MERN stack (MongoDB, Expre
 
 The project is deployed and accessible at [https://edukan-ap98.onrender.com/](https://edukan-ap98.onrender.com/).
 
+Note: Intial load time may take long due use of free plan at render. Further load time will be faster.
+
 
 ## Usage
 
@@ -48,6 +50,10 @@ The project is deployed and accessible at [https://edukan-ap98.onrender.com/](ht
   - Add products to the cart.
   - Purchase products.
   - Rate and review products.
+
+## Snapshots
+#### Sign up page
+[Sign up page](/eDukan/Screenshots//user/signup.jpg)
 
 ## Disclaimer
 
