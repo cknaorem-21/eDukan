@@ -2,14 +2,11 @@
 
 This is an e-commerce web application built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and styled with Tailwind CSS.
 
-## Features
+## Deployment
 
-- **Admin Panel**: Allows administrators to perform CRUD operations on products and users.
-- **User Accounts**: Users can register, log in, and perform actions such as purchasing products, rating, and reviewing.
-- **JWT Custome Auth**: Implemented custom authentication using JWT(Json Web Tokens).
-- **Role based access control**: Implemented protected routes depending on user role using middlewares in backend and React router in frontend.
-- **Redux-toolkit**: Used Redux-tooolkit for global state management.
-- **RTK Queries**: Used Redux Toolkit Queries(RTK Queries) for efficient query fetching and caching.
+The project is deployed and accessible at [https://edukan-ap98.onrender.com/](https://edukan-ap98.onrender.com/).
+
+Note: Intial load time may take long due use of free plan at render. Further load time will be faster.
 
 ## Admin Credentials
 
@@ -21,6 +18,15 @@ This is an e-commerce web application built using the MERN stack (MongoDB, Expre
 - email: userone@email.com
 - Password: 123456
 
+## Features
+
+- **Admin Panel**: Allows administrators to perform CRUD operations on products and users.
+- **User Accounts**: Users can register, log in, and perform actions such as purchasing products, rating, and reviewing.
+- **JWT Custome Auth**: Implemented custom authentication using JWT(Json Web Tokens).
+- **Role based access control**: Implemented protected routes depending on user role using middlewares in backend and React router in frontend.
+- **Redux-toolkit**: Used Redux-tooolkit for global state management.
+- **RTK Queries**: Used Redux Toolkit Queries(RTK Queries) for efficient query fetching and caching.
+
 ## Technologies Used
 
 - MongoDB
@@ -28,12 +34,6 @@ This is an e-commerce web application built using the MERN stack (MongoDB, Expre
 - React.js
 - Node.js
 - Tailwind CSS
-
-## Deployment
-
-The project is deployed and accessible at [https://edukan-ap98.onrender.com/](https://edukan-ap98.onrender.com/).
-
-Note: Intial load time may take long due use of free plan at render. Further load time will be faster.
 
 
 ## Usage
