@@ -53,7 +53,7 @@ Note: Intial load time may take long due use of free plan at render. Further loa
 
 ## Snapshots
 #### Sign up page
-[Sign up page](../Screenshots/user/signup.jpg)
+![Sign up page](./Screenshots/user/signup.jpg)
 
 ## Disclaimer
 
